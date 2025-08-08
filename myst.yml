@@ -1,0 +1,64 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 899b5b31-4895-46ff-ab87-48d78140335d
+  title: GLCat Documentation
+  description: Documentation for the GALEX Legacy Catalog (GLCat)
+  # keywords: [GALEX, GLCat, gPhoton]
+  # authors: 
+  github: https://github.com/MillionConcepts/glcat_documentation
+  # To autogenerate a Table of Contents, run "myst init --write-toc"
+  toc:
+    - file: pages/main.md
+    - title: gPhoton2 Overview
+      children:
+      - file: pages/gPhoton2 Overview.md
+      - file: pages/Filenaming Conventions.md
+      - file: pages/Image File Formats.md
+      - file: pages/Image File Formats.ipynb
+        hidden: true
+      - file: pages/photometry_concepts.md
+      - file: pages/definitions.md 
+        hidden: true
+      - file: pages/001 - basic_photometry.ipynb
+        hidden: true
+      - file: pages/tables/photonlist_tbl_def.md
+        hidden: true
+      - file: pages/tables/image_metadata.md
+        hidden: true
+    - title: GLCAT Overview
+      children:
+        - file: pages/placeholder.md
+    - title: Other GALEX Documentation
+      children:
+        - file: pages/placeholder.md
+  exclude:
+    - test_data/*
+    - figures/*
+site:
+  template: book-theme
+  options:
+    favicon: pages/m12_stack.png
+    logo: pages/m12_stack.png
+    footer: ""
+    banner: ""
+    hide_toc: false
+abbreviations:
+  GALEX: Galaxy Evolution Explorer
+  GLCat: GALEX Legacy Catalog
+  GFCat: GALEX Flare Catalog
+  MCAT: GALEX Merged Catalog
+  AIS: All-sky Imaging Survey
+  MIS: Medium Imaging Survey
+  DIS: Deep Imaging Survey
+  GII: Guest Investigator Imaging
+  MAST: Mikulski Archive for Space Telescopes
+  FUV: Far Ultraviolet
+  NUV: Near Ultraviolet
+  PSF: Point Spread Function
+  FWHM: Full Width at Half Maximum
+  FITS: Flexible Image Transport System
+  HDU: Header Data Unit
+  RA: Right Ascension
+  Dec: Declination
+  cps: counts per second
