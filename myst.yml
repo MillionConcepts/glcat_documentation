@@ -41,8 +41,8 @@ site:
     favicon: pages/m12_stack.png
     logo: pages/m12_stack.png
     footer: ""
-    banner: ""
     hide_toc: false
+  banner: ""
 abbreviations:
   GALEX: Galaxy Evolution Explorer
   GLCat: GALEX Legacy Catalog
