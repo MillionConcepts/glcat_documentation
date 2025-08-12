@@ -13,7 +13,7 @@ project:
     - title: gPhoton2 Overview
       children:
       - file: pages/gPhoton2 Overview.md
-      - file: pages/Filenaming Conventions.md
+      - file: pages/filenaming_conventions.md
       - file: pages/Image File Formats.md
       - file: pages/Image File Formats.ipynb
         hidden: true
