@@ -10,9 +10,11 @@ A description of the image HDU headers can be found [here](tables/image_metadata
 
 (count_images)=
 ## Count Images
+The count images record the cumulative photon events corresponding to each 1.5"x1.5" pixel in sky-projected, coordinates corrected for response. They have not been scaled for effective exposure time, and no artifact or edge masking has been applied. 
 
-![](figures/cnt_images.png)
-*Figure: Example of a count map image.*
+
+![](figures/count_image_example_e23456.png)
+*Figure: Example of count images in each band. Note the prominence of distortion around the edges of the frames. The radial streaks are internal reflections due to sources just outside of the field of view. The "donut" shapes are unmasked hotspots.*
 
 ### Movies
 
@@ -34,10 +36,20 @@ The flags are defined as a binary bitmask, so they are additive when more than o
 
 The flag map will always have exactly the same dimensions as the count image. Therefore, if this is a `-movie` file, then the flag map will have the same number of "frames" as the image. This can be useful for excluding a subset of the the overall observation from analyses due to flagging of the target of interest (while admitting other frames).
 
+![](figures/flag_image_example_e23456.png)
+*Figure: Example of a flag map.*
+
 (coverage_maps)=
 ## Coverage
 
+The coverage map 
+
+The region of full depth observation is the region in which it makes sense to naively divide the count image by the observation exposure time. It would be extremely difficult and maybe impossible to accurately correct for the exposure times in these regions of fractional observation depth. Due to the leg-splitting heuristic that gPhoton uses to determine contiguous observations from the aspect data directly **[DESCRIBE THIS SOMEWHERE]**, the region of marginal exposure should never be more than a few arcminutes across. The "hard edge" flag should always describe a usable region of observation that is smaller than the region of 100% exposure depth.
+
 Aspect-derived maps are presented in sky-projected space. The coverage is not uniform across the observation due to dither. A value of 1 indicates full coverage during the observation, while a value of 2 indicates partial coverage. A value of 0 marks areas entirely outside the observation. Typically, most researchers will be interested in areas with a coverage value of 1 (full coverage).
+
+![](figures/coverage_image_example_e23456.png)
+*Figure: Example of a coverage map.*
 
 ## Integrated Images
 
@@ -54,8 +66,8 @@ Note that dose maps will not be aligned with the orientation of the sky-projecte
 [^dose_map]: Another way to put this---which may or may not clear up confusion---is that does maps are _not_ intermediate products on the path to sky-projected count image. There is no set of operations that turns a dose map into a count image.
 
 ```{aside}
-The dose maps for NUV and FUV will be aligned with each other. Somewhat annoyingly, however, the detectors were not installed on the spacecraft in the same orientation. So the "x-direction" as reported by the detector electronics in each band do not match. Our understanding, which we communicate merely as an amusing factoied, is that this fact was not discovered until the spacecraft was already on orbit and the ground data processing pipeline started spitting out incorrectly aligned images.
+The NUV and FUV dose maps produced by _gPhoton2_ will be aligned with each other. Somewhat annoyingly, however, the detectors were not installed on the spacecraft in the same orientation. So the "x-direction" as reported by the detector electronics (e.g. in the [photonlist files](#photonlist_filenames)) do not match across bands. Our understanding---which we communicate merely as an amusing factoid---is that this was not discovered until the spacecraft was already on orbit and the ground data processing pipeline started spitting out incorrectly aligned images.
 ```
 
-![Dose map example](figures/dose_maps.png)
+![Dose map example](figures/dose_image_example_e23456.png)
 *Figure: Example of a dose map image.*

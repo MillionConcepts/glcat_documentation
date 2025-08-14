@@ -2,7 +2,7 @@
 version: 1
 project:
   id: 899b5b31-4895-46ff-ab87-48d78140335d
-  title: GLCat Documentation
+  title: GALEX Documentation
   description: Documentation for the GALEX Legacy Catalog (GLCat)
   # keywords: [GALEX, GLCat, gPhoton]
   # authors: 
@@ -10,28 +10,37 @@ project:
   # To autogenerate a Table of Contents, run "myst init --write-toc"
   toc:
     - file: pages/main.md
-    - title: gPhoton2 Overview
+    - file: pages/getting_started.md
+    - title: GALEX
       children:
-      - file: pages/gPhoton2 Overview.md
+      - file: pages/galex_documentation.md
+      - file: pages/galex_observation_modes.md
+    - title: gPhoton2
+      children:
+      - file: pages/gphoton_pipeline.md
       - file: pages/filenaming_conventions.md
       - file: pages/Image File Formats.md
       - file: pages/Image File Formats.ipynb
         hidden: true
-      - file: pages/photometry_concepts.md
       - file: pages/definitions.md 
-        hidden: true
-      - file: pages/001 - basic_photometry.ipynb
         hidden: true
       - file: pages/tables/photonlist_tbl_def.md
         hidden: true
       - file: pages/tables/image_metadata.md
         hidden: true
+      - title: Methods and Cookbooks
+        children:
+        - file: pages/basic_image_processing.ipynb
+        - file: pages/aperture_photometry.md
+        - file: pages/001 - basic_photometry.ipynb
+          hidden: true
     - title: GLCAT Overview
       children:
         - file: pages/placeholder.md
     - title: Other GALEX Documentation
       children:
-        - file: pages/placeholder.md
+        - file: pages/galex_documentation.md
+    - file: pages/acknowledgements.md
   exclude:
     - test_data/*
     - figures/*

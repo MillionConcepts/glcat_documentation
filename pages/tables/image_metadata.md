@@ -162,8 +162,8 @@ ORIGIN  = 'Million Concepts'
 VERSION = 'v3.0.0a0'                                                            
 DATE    = '2025-07-26T01:07:33+00:00'                                           
 COMMENT Sky-projected bitmap of flags, where any flagged photon in that bin defi
-COMMENT  nes the flag for that whole bin. Flag 1: Mission hotspot mask. Flag 2: 
-COMMENT P ost-CSP ghost flag. Flag 4: Wide edge flag. Flag 8: Narrow edge flag. 
+COMMENT  nes the flag for that whole bin. Flag 1: Mission hotspot mask. Flag 2:
+COMMENT P ost-CSP ghost flag. Flag 4: Wide edge flag. Flag 8: Narrow edge flag.
 COMMENT Ex : Flag 12 means both narrow and wide edge flags are set.      
 ```
 

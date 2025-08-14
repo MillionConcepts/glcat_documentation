@@ -1,5 +1,5 @@
 ---
-title: GLCAT and gPhoton2 Documentation
+title: GALEX Documentation
 site:
   hide_outline: true
   hide_toc: true
@@ -14,4 +14,4 @@ for GALEX, gPhoton2, & the GALEX Legacy Catalog (GLCAT)
 
 ![](m12_stack.png)
 
-{button}`Documentation <https://mystmd.org/guide/website-landing-pages>`
+<!-- {button}`Documentation <https://mystmd.org/guide/website-landing-pages>` -->

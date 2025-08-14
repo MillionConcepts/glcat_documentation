@@ -1,0 +1,5 @@
+# Getting Started
+
+The Galaxy Evolution Explorer (GALEX) was a NASA Small Explorer (SMex) class astronomical space telescope that observed the sky in two ultraviolet bands between April 2003 and June 2013. GALEX used a large field of view (~1.25°) to build up extensive survey coverage (~30,000 square degrees) in UV bands that are poorly observed generally (ca. 1528Å "Far Ultraviolet" and ca. 2271Å "Near Ultraviolet") with time domain coverage spanning from ~seconds to ~years. The GALEX data are unique and unprecedented in a number of ways, and no missions that can match its capabilities or reproduce its observations are currently in development.
+
+For some further high-level explication, [Wikipedia has a good overview of the mission design and objectives.](https://en.wikipedia.org/wiki/GALEX)
