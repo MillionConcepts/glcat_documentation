@@ -9,7 +9,6 @@ site:
 gPhoton 2 relies on four large tables of precalculated data.
 These contain information about each
 [{abbr}`GALEX (Galexy Evolution Explorer)`][GALEX] eclipse[^eclipse]
-
 which depends only on how the GALEX satellite was programmed for that
 eclipse (this is the “metadata”) and what part of the sky it was
 actually pointed at during each part of the eclipse (the “aspect
