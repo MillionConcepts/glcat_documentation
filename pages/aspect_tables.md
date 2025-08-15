@@ -108,7 +108,7 @@ described below.
 * - `ok_exposure_time`
   - float (may be null)
   - Leg recalculation
-  - Total time during which usable data was weing collected; always less than `eclipse_duration`; always a whole number of seconds
+  - Total time during which usable data was being collected; always less than `eclipse_duration`; always a whole number of seconds
 * - `ra0`
   - float (may be null)
   - Leg recalculation
@@ -186,7 +186,7 @@ for that band is true *and* the `det_on_time` column for that band is
 positive.
 
 (plan-types)=
-### `plan_type` codes
+### `plan_type` and `plan_subtype` codes
 
 The `plan_type` column holds a three-letter code that identifies the
 general type of observation that was carried out during each eclipse.
@@ -265,9 +265,48 @@ depends only on its `plan_type`.
 
 :::
 
+The subtype codes provide a finer classification of some plan types.
+
+:::{list-table} Plan subtypes
+:label: plan-subtypes
+:align: center
+:header-rows: 1
+
+* - Subtype code
+  - Used with types
+  - Description
+* - ais
+  - AIS
+  - All AIS eclipses have subtype “ais”.
+* - cal
+  - CAI CAS MIS
+  - Calibration-related observations?
+* - deep
+  - DIS DSS MSS WSS
+  - Targets selected originally for DIS?
+* - dto
+  - DTI MIS
+  - ???
+* - etc
+  - ETI ETS MIS
+  - “etcetera”?
+* - gip
+  - GII GIS
+  - Targets selected via Guest Investigator Program?
+* - ioc
+  - MIS NGS
+  - ???
+* - mis
+  - MIS
+  - Majority of MIS eclipses have subtype “mis”.
+* - ngs
+  - MIS NGS
+  - Targets selected originally for NGS?
+
+:::
+
 [galex-tech-ch2]: http://www.galex.caltech.edu/researcher/techdoc-ch2.html
 
-### `plan_subtype` codes
 
 (boresight)=
 ### `boresight.parquet`
