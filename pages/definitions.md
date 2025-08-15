@@ -7,3 +7,9 @@ movie
 dead time
 : The fraction of total observation time that is lost to detector readout.
 :::
+
+:::{glossary}
+eclipse
+: The period of time in which the spacecraft was in the Earth's shadow, once per orbit, and could potentially observe the sky. The GALEX eclipses are numbered, with each number corresponding to an orbit. The usable period of each eclipse, which is the maximum duration of a single observation, was about 30 minutes.
+:::
+
