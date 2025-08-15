@@ -18,9 +18,12 @@ project:
     - title: gPhoton2
       children:
       - file: pages/gphoton_pipeline.md
+      - file: pages/aspect_tables.md
       - file: pages/filenaming_conventions.md
       - file: pages/Image File Formats.md
       - file: pages/Image File Formats.ipynb
+        hidden: true
+      - file: pages/definitions.md
         hidden: true
       - file: pages/tables/photonlist_tbl_def.md
         hidden: true
