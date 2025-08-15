@@ -6,16 +6,18 @@ site:
   hide_title_block: true
 ---
 
-gPhoton 2 relies on four large tables of precalculated data.  These
-contain information about each [{abbr}`GALEX (Galexy Evolution
-Explorer)`][] eclipse[^eclipse] which depends only on how the GALEX
-satellite was programmed for that eclipse (this is the “metadata”) and
-what part of the sky it was actually pointed at during each part of
-the eclipse (the “aspect data”).  Everything in these tables can,
-in principle, be recalculated from the [GALEX archive][] on
-[{abbr}`MAST (Mikulski Archive for Space Telescopes)`][];
-however, this is an expensive process and there is little
-scientific value in repeating it.
+gPhoton 2 relies on four large tables of precalculated data.
+These contain information about each
+[{abbr}`GALEX (Galexy Evolution Explorer)`][GALEX] eclipse[^eclipse]
+
+which depends only on how the GALEX satellite was programmed for that
+eclipse (this is the “metadata”) and what part of the sky it was
+actually pointed at during each part of the eclipse (the “aspect
+data”).  Everything in these tables can, in principle, be recalculated
+from the [GALEX archive][] on
+[{abbr}`MAST (Mikulski Archive for Space Telescopes)`][MAST];
+however, this is an expensive process and there is little scientific
+value in repeating it.
 
 The aspect and metadata tables are not distributed along with the
 gPhoton source code. [They are currently downloadable from Google
@@ -28,9 +30,8 @@ convenient location, in the future.
     that passed within Earth’s shadow.  Each such period of active
     observation is referred to as an eclipse.
 
-% This server does not offer HTTPS
-[GALEX]: http://www.galex.caltech.edu/
 
+[GALEX]: http://www.galex.caltech.edu/
 [GALEX archive]: https://archive.stsci.edu/missions-and-data/galex
 [MAST]: https://archive.stsci.edu/
 [gdrive-aspect]: https://drive.google.com/drive/u/1/folders/1aPfLKsZM8x5Pxji0Lh3dUblpo9dyt1IW
@@ -49,8 +50,9 @@ the type of data that GALEX collected during that eclipse.  Notably,
 spectroscopic “grism” observations are currently not supported, but
 appear in this table anyway.
 
-Most of the data in this table is aggregated from the “{abbr}`SCST
-(spacecraft state)`” files on MAST.  Some columns contain summary data
+Most of the data in this table is aggregated from the
+“{abbr}`SCST (spacecraft state)`” files on MAST.
+Some columns contain summary data
 from the [heuristic leg recalculation](#leg-recalc) process,
 described below.
 
@@ -280,3 +282,5 @@ depends only on its `plan_type`.
 
 (leg-recalc)=
 ## Heuristic Leg Recalculation
+
+TBW (possibly should be its own page)
