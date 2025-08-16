@@ -29,6 +29,7 @@ project:
         hidden: true
       - file: pages/tables/image_metadata.md
         hidden: true
+      - file: pages/alt_photom_cols.md
       - title: Methods and Cookbooks
         children:
         - file: pages/basic_image_processing.ipynb
