@@ -1,4 +1,4 @@
-# Extra Photometry Columns
+# Extended photometry columns
 
 ## Hotspots and Coldspots: Detector Artifacts 
 
