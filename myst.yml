@@ -20,8 +20,8 @@ project:
       - file: pages/gphoton_pipeline.md
       - file: pages/aspect_tables.md
       - file: pages/filenaming_conventions.md
-      - file: pages/Image File Formats.md
-      - file: pages/Image File Formats.ipynb
+      - file: pages/image_file_formats.md
+      - file: pages/image_file_formats.ipynb
         hidden: true
       - file: pages/definitions.md
         hidden: true
@@ -32,8 +32,8 @@ project:
       - file: pages/alt_photom_cols.md
       - title: Methods and Cookbooks
         children:
-        - file: pages/basic_image_processing.ipynb
-        - file: pages/basic_photometry.ipynb
+        - file: pages/cookbook_basic_image_processing.ipynb
+        - file: pages/cookbook_basic_photometry.ipynb
     - title: GLCAT Overview
       children:
         - file: pages/glcat_introduction.md

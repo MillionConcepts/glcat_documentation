@@ -1,36 +1,30 @@
 # Observation Modes
 
-AIS, MIS, DIS, NGS, WSS, MSS, DSS, UIS, GII, GIS
-
-                    $surv_color_map{AIS}  => 0,
-                    $surv_color_map{CAI}  => 1,
-                    $surv_color_map{CAS}  => 1.5,
-                    $surv_color_map{MIS}  => 2,
-                    $surv_color_map{NGS}  => 3,
-                    $surv_color_map{ETI}  => 4,
-                    $surv_color_map{ETS}  => 5,
-                    $surv_color_map{GII}  => 6,
-                    $surv_color_map{GIS}  => 7,
-                    $surv_color_map{DIS}  => 8,
-                    $surv_color_map{UIS}  => 9,
-                    $surv_color_map{WSS}  =>10,
-                    $surv_color_map{MSS}  =>11,
-                    $surv_color_map{DSS}  =>12,
-
-
+| Mode | Description | Typical Exposure Time | Typical Depth (AB mag) | Notes |
+|------|-------------|-----------------------|------------------------|-------|
+| AIS  | All-Sky Imaging Survey | ~100 sec | ~20.5 | Typically 12 legs per eclipse. |
+| MIS  | Medium Imaging Survey | ~1500 sec | ~23 | Typically one leg per eclipse. |
+| DIS  | Deep Imaging Survey | ~30000 sec | ~25 | Repeated MIS-like or AIS-like visits to the same field |
+| NGS  | Nearby Galaxy Survey | Varies | Varies | Targeted observations of nearby galaxies |
+| WSS  | Wide Spectroscopic Survey | Varies | Varies | Spectroscopic observations |
+| MSS  | Medium Spectroscopic Survey | Varies | Varies | Spectroscopic observations |
+| DSS  | Deep Spectroscopic Survey | Varies | Varies | Spectroscopic observations |
+| UIS  | Ultra Imaging Survey | Varies | Varies | Targeted deep imaging |
+| GII  | Guest Investigator Imaging | Varies | Varies | Guest investigator programs |
+| GIS  | Guest Investigator Spectroscopic | Varies | Varies | Guest investigator programs |
 
 ## GALEX standardized aperture radii
 
 
 | Index | Aperture Radius | Note |
 |-------|-----------------|------|
-| 0     | 1.5" | |
-| 1     | 2.3" | Minimum recommended for scientific analyses. |
-| 2     | 3.8" | |
-| 3     | 6.0" | |
-| **4**     | **9.0"** | **Recommended as best general purpose aperture.** |
-| 5     | 12.8" | |
-| 6     | 17.3" | |
-| 7     | 30.0" | Maximum recommended for scientific analyses. |
-| 8     | 60.0" | Not recommended except for unusual calibration needs. |
-| 9     | 90.0" | Not recommended except for unusual calibration needs. |
+| 1     | 1.5" | |
+| 2     | 2.3" | Minimum recommended for scientific analyses. |
+| 3     | 3.8" | |
+| **4** | **6.0"** | **Recommended as best general purpose aperture.** |
+| 5     | 9.0" | |
+| 6     | 12.8" | |
+| 7     | 17.3" | Maximum recommended for most scientific analyses. |
+| 8     | 30.0" | Useful outer background annuli radius in uncrowded fields. |
+| 9     | 60.0" | Not recommended except for unusual calibration needs. |
+| 10     | 90.0" | Not recommended except for unusual calibration needs. |
