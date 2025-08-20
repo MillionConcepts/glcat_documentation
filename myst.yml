@@ -30,6 +30,7 @@ project:
       - file: pages/tables/image_metadata.md
         hidden: true
       - file: pages/alt_photom_cols.md
+      - file: pages/photonmasking.md
       - title: Methods and Cookbooks
         children:
         - file: pages/cookbook_basic_image_processing.ipynb
