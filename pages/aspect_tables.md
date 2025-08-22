@@ -2,9 +2,9 @@
 title: The Aggregated Aspect and Metadata Tables
 site:
   hide_outline: true
-  hide_toc: true
-  hide_title_block: true
 ---
+
+# The Aggregated Aspect and Metadata Tables
 
 gPhoton 2 relies on four large tables of precalculated data.
 These contain information about each
@@ -40,6 +40,15 @@ convenient location, in the future.
 There are four files of aggregated metadata; each contains a single
 table in [Apache Parquet][] format.
 
+All four tables contain celestial coordinates; these are uniformly
+equatorial (J2000), with values in decimal degrees.  Declination
+ranges from −90° to 90°.  Right ascension _normally_ ranges from
+−180° to 180°, but values greater than 180° can appear in a few
+places, such as the `ra_max` column of `metadata.parquet` and
+`boresight.parquet`.
+
+[Apache Parquet]: https://parquet.apache.org/
+
 (metadata)=
 ### `metadata.parquet`
 
@@ -47,13 +56,17 @@ This table contains one row for every eclipse that has _something_
 archived on MAST, whether or not gPhoton 2 can currently process
 the type of data that GALEX collected during that eclipse.  Notably,
 spectroscopic “grism” observations are currently not supported, but
-appear in this table anyway.
+appear in this table anyway.  The `has_aspect` column of this table
+(see below) is true for all eclipses that gPhoton 2 supports, and
+false for those that it doesn’t.  When `has_aspect` is false, several
+other columns of `metadata.parquet` will be null, and the eclipse
+in question will be completely absent from the other three tables.
 
 Most of the data in this table is aggregated from the
 “{abbr}`SCST (spacecraft state)`” files on MAST.
 Some columns contain summary data
-from the [heuristic leg recalculation](#leg-recalc) process,
-described below.
+from the [heuristic leg recalculation](/glcat-leg-recalc)
+that was performed for GLCAT.
 
 :::{list-table} Columns of `metadata.parquet`
 :label: metadata-schema
@@ -67,258 +80,160 @@ described below.
 * - `eclipse`
   - integer
   - scst file header, `ECLIPSE`
-  - Serial number of the eclipse
+  - Serial number of the eclipse.
 * - `plan_type`
   - string
   - scst file header, `MPSTYPE`
-  - Code for the type of observation planned for this eclipse (see [](#plan-types))
+  - [Observation mode](/galex-observation-modes) for this eclipse.
 * - `plan_subtype`
   - string
   - scst file header, `MPSPLAN`
-  - Code for the subtype of observation planned for this eclipse (see [](#plan-subtypes))
+  - [Observation subtype](/galex-observation-modes#observation-subtypes)
+    for this eclipse.
 * - `visit`
   - integer
   - scst file header, `VISIT`
-  - Visit code for this eclipse (needs elaboration)
+  - Visit code for this eclipse (needs elaboration).
 * - `plan_id`
   - integer
   - scst file header, `PLANID`
-  - Code for the specific observation plan for this eclipse (needs elaboration)
+  - Code for the specific observation plan for this eclipse
+    (needs elaboration).
 * - `planned_legs`
   - integer
   - scst file header, `MPSNPOS`
-  - Number of _planned_ observation targets for this eclipse
+  - Number of _planned_ observation targets for this eclipse.
+    Always at least 1; in practice, never higher than 12.
 * - `observed_legs`
-  - integer (may be null)
+  - integer[^null-unsupport]
   - Leg recalculation
-  - Number of distinct targets actually observed
+  - Number of distinct targets actually observed.
+    This is _usually_ equal to `planned_legs` but can be smaller or bigger.
 * - `has_aspect`
   - boolean
   - `aspect.parquet`
-  - True if gPhoton 2 supports processing this eclipse’s data
+  - True if gPhoton 2 supports processing this eclipse’s data.
 * - `eclipse_start`
   - float
-  - Leg recalculation
-  - Start time for this eclipse, as seconds since the GPS epoch; always strictly less than the time of the first [aspect fix](#aspect-schema) for the eclipse
+  - scst file header, `TRANGE0`
+  - Start time for this eclipse, as seconds since the
+    {abbr}`GPS (Global Positioning System)` epoch[^gps-epoch];
+    always strictly less than the time of the first
+    [aspect fix](#aspect-schema) for the eclipse.
 * - `eclipse_duration`
   - float
-  - Leg recalculation
-  - Duration of this eclipse, in seconds; `eclipse_start + eclipse_duration` is always strictly greater than the time of the last [aspect fix](#aspect-schema) for the eclipse
+  - scst file header, `TRANGE1`
+  - Duration of this eclipse, in seconds;
+    `eclipse_start + eclipse_duration` is always strictly greater than
+    the time of the last [aspect fix](#aspect-schema) for the eclipse.
 * - `ok_exposure_time`
-  - float (may be null)
+  - float[^null-unsupport]
   - Leg recalculation
-  - Total time during which usable data was being collected; always less than `eclipse_duration`; always a whole number of seconds
-* - `ra0`
-  - float (may be null)
-  - Leg recalculation
-  - {abbr}`RA (equatorial right ascension)` of the centroid of where the telescope was pointed during this eclipse, in decimal degrees
+  - Total time during which usable data was being collected;
+    always less than `eclipse_duration`;
+    always a whole number of seconds.
 * - `ra_min`
-  - float (may be null)
+  - float[^null-unsupport]
   - Leg recalculation
-  - RA of one corner of a bounding box for where the eclipse was pointed
+  - {abbr}`RA (equatorial right ascension)` of the western edge of a
+    box enclosing the telescope’s aggregate field of view during this
+    eclipse.
 * - `ra_max`
-  - float (may be null)
+  - float[^null-unsupport]
   - Leg recalculation
-  - RA of the diagonally opposite corner of the bounding box
-* - `dec0`
-  - float (may be null)
+  - RA of the eastern edge of a box enclosing the telescope’s
+    aggregate field of view during this eclipse.  Always greater than
+    `ra_min`.  In rare cases (when the field of view crossed the ±180°
+    meridian), `ra_max` can be greater than 180.
+* - `ra0`
+  - float[^null-unsupport]
   - Leg recalculation
-  - {abbr}`Dec (equatorial declination)` of the centroid
+  - RA of the centroid of the telescope’s aggregate field of view.
+    Always greater than `ra_min` and less than `ra_max`.  In rare
+    cases (when the field of view crossed the ±180° meridian), `ra0`
+    can be greater than 180.
 * - `dec_min`
-  - float (may be null)
+  - float[^null-unsupport]
   - Leg recalculation
-  - Dec of one corner of the bounding box
+  - Declination of the southern edge of a box enclosing the
+    telescope’s aggregate field of view during this eclipse.
 * - `dec_max`
-  - float (may be null)
+  - float[^null-unsupport]
   - Leg recalculation
-  - Dec of the diagonally opposite corner
+  - Declination of the northern edge of a box enclosing the
+    telescope’s aggregate field of view during this eclipse.
+    Always greater than `dec_min`.
+* - `dec0`
+  - float[^null-unsupport]
+  - Leg recalculation
+  - Declination of the centroid of the telescope’s aggregate field of view.
+    Always greater than `dec_min` and less than `dec_max`.
 * - `nuv_det_on_time`
   - float
   - scst file header, `NHVNOMN`
-  - Total time the {abbr}`NUV (near-ultraviolet)` detector was operational during the eclipse
+  - Total time the {abbr}`NUV (near-ultraviolet)` detector was
+    operational during the eclipse.
 * - `nuv_det_temp`
-  - float (may be NaN)
+  - float[^null-nuv-off]
   - scst file header, `NDTDET`
-  - Temperature of one component of the NUV detector (°C)
+  - Temperature (°C) of one component of the NUV detector.
 * - `nuv_tdc_temp`
-  - float (may be NaN)
+  - float[^null-nuv-off]
   - scst file header, `NDTTDC`
-  - Temperature of another component of the NUV detector (°C)
+  - Temperature (°C) of another component of the NUV detector.
 * - `nuv_has_raw6`
   - boolean
   - MAST index
-  - Whether MAST has archived a “raw6” file containing GALEX’s observations in the NUV band
+  - Whether MAST has archived a “raw6” file containing GALEX’s
+    observations in the NUV band.
 * - `fuv_det_on_time`
   - float
   - scst file header, `FHVNOMN`
-  - Total time the {abbr}`FUV (far-ultraviolet)` detector was operational during the eclipse
+  - Total time the {abbr}`FUV (far-ultraviolet)` detector was
+    operational during the eclipse.
 * - `fuv_det_temp`
-  - float (may be NaN)
+  - float[^null-fuv-off]
   - scst file header, `FDTDET`
-  - Temperature of one component of the FUV detector (°C)
+  - Temperature (°C) of one component of the FUV detector.
 * - `fuv_tdc_temp`
-  - float (may be NaN)
+  - float[^null-fuv-off]
   - scst file header, `FDTTDC`
-  - Temperature of another component of the FUV detector (°C)
+  - Temperature (°C) of another component of the FUV detector.
 * - `fuv_has_raw6`
   - boolean
   - MAST index
-  - Whether MAST has archived a “raw6” file containing GALEX’s observations in the FUV band
+  - Whether MAST has archived a “raw6” file containing GALEX’s
+    observations in the FUV band.
 
 :::
 
-Nulls appear in the columns that “may be null” only when the eclipse
-collected data of a type that gPhoton 2 does not currently support.
-These eclipses are completely absent from the other three tables.
-Whenever one of these columns contains a null, all the rest of them
-will also contain nulls, and the `has_aspect` column will be false;
-conversely, if `has_aspect` is true, then none of these columns will
-be null.
+[^gps-epoch]: January 6, 1980, at 00:00:00 UTC.
 
-The `nuv_det_temp` and `nuv_tdc_temp` columns contain NaN values when,
-and only when, `nuv_det_on_time` is zero.  Similarly, the `fuv_det_temp`
-and `fuv_tdc_temp` columns contain NaN values when, and only when,
-`fuv_det_on_time` is zero.  Note that `nuv_has_raw6` and `fuv_has_raw6`
-are not so neatly correlated with `nuv_det_on_time` and `fuv_det_on_time`.
-Meaningful data is available in a band only when the `has_raw6` column
-for that band is true *and* the `det_on_time` column for that band is
-positive.
+[^null-unsupport]: These columns will all be null when (and only when)
+    the `has_aspect` column is false, indicating that gPhoton 2
+    currently doesn’t support the observation mode of this eclipse.
 
-(plan-types)=
-### `plan_type` and `plan_subtype` codes
+[^null-nuv-off]: These columns will be either null or NaN when
+    `nuv_det_on_time` is zero, meaning that no data was collected in
+    the NUV band for this eclipse.  Caution: `nuv_has_raw6` may be
+    either true or false in _both_ cases.  Meaningful NUV data is only
+    available when `nuv_has_raw6` is true _and_ `nuv_det_on_time` is
+    positive.
 
-The `plan_type` column holds a three-letter code that identifies the
-general type of observation that was carried out during each eclipse.
-These correspond to the different classes of “science survey”
-documented in [chapter 2 of the official GALEX technical
-documentation][galex-tech-ch2]; see that document for a slightly more
-detailed description of each survey class.
-
-Whether gPhoton 2 supports analysis of data from an eclipse (see above)
-depends only on its `plan_type`.
-
-:::{list-table} Plan types supported by gPhoton 2
-:label: plan-types-supported
-:align: center
-:header-rows: 1
-
-* - Code
-  - Official name
-  - Description
-* - AIS
-  - All-sky Imaging Survey
-  - Short-duration exposures intended to cover as much of the sky as possible.
-    (The galactic plane and several other ultraviolet bright spots had to be avoided.)
-    AIS eclipses invariably are split into multiple “legs” (see [](#boresight)).
-* - MIS
-  - Medium Imaging Survey
-  - Exposures as long as will fit in one eclipse ($\approx 1\,500\,\text{s}$),
-    targets selected to match other broad sky surveys.
-* - DIS
-  - Deep Imaging Survey
-  - Repeated long exposures of targets known to be interesting in the ultraviolet.
-* - NGS
-  - Nearby Galaxy Survey
-  - A selective sample of nearby galaxies.
-* - CAI
-  - Calibration Imaging
-  - Images of white dwarf stars of known ultraviolet brightness, for calibration.
-* - DTI
-  - ???
-  - ???
-* - ETI
-  - ???
-  - ???
-* - GII
-  - Guest Investigator Imaging
-  - Targets selected by researchers outside the GALEX team.  Many subtypes.
-
-:::
-
-:::{list-table} Plan types currently not supported by gPhoton 2
-:label: plan-types-unsupported
-:align: center
-:header-rows: 1
-
-* - Code
-  - Official name
-  - Description
-* - MSS
-  - Medium Spectroscopic Survey
-  - ???
-* - DSS
-  - Deep Spectroscopic Survey?
-  - ???
-* - WSS
-  - Wide? Spectroscopic Survey?
-  - ???
-* - CAS
-  - Calibration Spectroscopy
-  - Similar to CAI, but data was collected in spectroscopic mode
-* - ETS
-  - ???
-  - ???
-* - GIS
-  - Guest Investigator Spectroscopy?
-  - Similar to GII, but data was collected in spectroscopic mode?
-
-:::
-
-The subtype codes provide a finer classification of some plan types.
-
-:::{list-table} Plan subtypes
-:label: plan-subtypes
-:align: center
-:header-rows: 1
-
-* - Subtype code
-  - Used with types
-  - Description
-* - ais
-  - AIS
-  - All AIS eclipses have subtype “ais”.
-* - cal
-  - CAI CAS MIS
-  - Calibration-related observations?
-* - deep
-  - DIS DSS MSS WSS
-  - Targets selected originally for DIS?
-* - dto
-  - DTI MIS
-  - ???
-* - etc
-  - ETI ETS MIS
-  - “etcetera”?
-* - gip
-  - GII GIS
-  - Targets selected via Guest Investigator Program?
-* - ioc
-  - MIS NGS
-  - ???
-* - mis
-  - MIS
-  - Majority of MIS eclipses have subtype “mis”.
-* - ngs
-  - MIS NGS
-  - Targets selected originally for NGS?
-
-:::
-
-[galex-tech-ch2]: http://www.galex.caltech.edu/researcher/techdoc-ch2.html
-
+[^null-fuv-off]: These columns will be either null or NaN when
+    `fuv_det_on_time` is zero, meaning that no data was collected
+    in the FUV band for this eclipse.  Caution: `fuv_has_raw6` may be
+    either true or false in _both_ cases.  Meaningful FUV data is only
+    available when `fuv_has_raw6` is true _and_ `fuv_det_on_time` is
+    positive.
 
 (boresight)=
 ### `boresight.parquet`
+
+Thist
 
 (leg-aperture)=
 ### `leg-aperture.parquet`
 
 (aspect)=
 ### `aspect.parquet`
-
-[Apache Parquet]: https://parquet.apache.org/
-
-(leg-recalc)=
-## Heuristic Leg Recalculation
-
-TBW (possibly should be its own page)
