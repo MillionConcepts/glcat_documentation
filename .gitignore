@@ -212,3 +212,8 @@ __marimo__/
 
 # MyST build outputs
 _build
+
+# NPM gunk
+node_modules/
+package.json
+package-lock.json
