@@ -19,6 +19,7 @@ project:
       children:
       - file: pages/gphoton_pipeline.md
       - file: pages/aspect_tables.md
+      - file: pages/sourcefinding.md
       - file: pages/filenaming_conventions.md
       - file: pages/image_file_formats.md
       - file: pages/image_file_formats.ipynb
