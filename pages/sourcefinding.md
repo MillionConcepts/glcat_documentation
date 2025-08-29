@@ -13,6 +13,14 @@ The current methodology for point source identification is as follows:
 3. **Threshold Image:** The threshold image will be used in step (5) as the cutoff for the count image, above which sources can be identified. The threshold image is derived from the background RMS image from the previous step, but with two modifications. Values below a "minimum" for the threshold are set to the minimum value. The image is then multiplied by a "multiplier" based on the number of photons used to make the image. Threshold setting is discussed more in the next section.
 5. **Image Convolution:** The count image and hotspot mask are convolved using a 2D gaussian kernel with a FWHM of 3 pixels and a size of 3 x 3 pixels.
 6. **Source Detection:** The convolved count image and mask are fed to `photutils` `detect_sources` which uses detects sources above the threshold image using image segmentation. A minimum of 2 connected pixels were required to qualify as a source. A segmentation image with the same shape as the count image is returned with pixels belonging to a source marked with an integer value representing each source.
+   
+```{image} figures/segmentation.png
+:alt: segments
+:width: 700px
+:align: center
+```
+*Figure: A segmentation image produced by `detect_sources` for eclipse 23456. Bright / large sources are labeled first and then other sources are indexed from top to bottom, as you can see in the color of the sources in the segmentation image.*
+
 7. **Source Deblending:** The segmentation image is deblended using `deblend_sources` which uses multi-thresholding to separate connected sources. To be deblended, the new source must have at least 3 connected pixels and the local peaks must have at least a 7.5 magnitude difference.
 8. **Source Outlining:** Then an image holding the outline of each source in the segmentation image is made using `outline_segments`. This is used for identifying point sources within extended sources (see below).
 9. **Source Catalog:** The segmentation image is converted to a catalog of sources using `SourceCatalog`. The `SourceCatalog` class returns many properties of each source that are unvetted, such as ellipticity, eccentricity, and the flux of all pixels identified as a source. Properties other than the source location are not propagated to the band catalogs of GLCAT. 
@@ -113,7 +121,7 @@ Two metrics are then added to the extended source catalog: the star count (`sour
 
 ### Artifacts as Extended Sources 
 
-Some artifacts, like edge reflections, look a lot like extended sources. It is important to double check in the image that your extended source is not an artifact. Proximity to the edge of the image is also a good proxy for viewing the image, although it will not cover all artifact types. 
+Some artifacts, like edge reflections, look a lot like extended sources. It is important to double check in the image that your extended source is not an artifact. Proximity to the edge of the image is also a good proxy for viewing the image, although it will not cover all artifact types. In the figure above you can see one edge reflection in the NUV is identified as an extended source. 
 
 ## Aperture Photometry 
 
