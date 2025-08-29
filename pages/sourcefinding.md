@@ -102,6 +102,15 @@ After creating a catalog of extended source outlines, we check what point source
 
 Two metrics are then added to the extended source catalog: the star count (`source_count`) and density of stars within the extended source (`area_density`). `Area_density` is the sum of the `area` column in the point source catalog for all stars identified as within an extended source divided by the `hull_area` from the extended source catalog. Both the star count and the star density of an extended source are good metrics for filtering extended sources. Large extended sources with lots of stars will have high star counts and relatively high density, while only 1 or 2 stars in an extended source with high density means it was likely a single star falsely identified as an extended source. We filter out the second type of extended source by only keeping those with area densities above .15 and at least 4 unique stars, or at least 30 unique stars with whatever density. 
 
+
+```{image} figures/extended_e8719.png
+:alt: e8719
+:width: 800px
+:align: center
+```
+*Figure: High source counts and a large area for the spiral galaxy in the middle differentiate it from other "extended" sources that are most likely point sources in the NUV, and are not identified as extended in the FUV.*
+
+
 ### Artifacts as Extended Sources 
 
 Some artifacts, like edge reflections, look a lot like extended sources. It is important to double check in the image that your extended source is not an artifact. Proximity to the edge of the image is also a good proxy for viewing the image, although it will not cover all artifact types. 
