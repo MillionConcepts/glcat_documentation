@@ -44,9 +44,9 @@ project:
       children:
         - file: pages/glcat_introduction.md
     - title: Other GALEX Documentation
-        - file: pages/aspect_refinement.md
       children:
         - file: pages/galex_documentation.md
+        - file: pages/aspect_refinement.md
     - file: pages/acknowledgements.md
     - file: pages/definitions.md 
       hidden: true
