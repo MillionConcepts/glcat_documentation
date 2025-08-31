@@ -1,7 +1,24 @@
 # Aspect Refinement 
 
-
 ## Mission Aspect Refinement 
+The GALEX telescope dithered during observations to avoid gain sag from bright sources. Therefore, the pointing of the telescope in the sky changed throughout each observation. To create a sky-projected image with stars as point sources, the trajectory of the telescope's FOV through the sky had to be recreated. The right ascension (RA), declination (DEC), and roll of the center of the detector pointed at in the sky at each time stamp of an observation is called the aspect solution. In the original mission pipeline and in gPhoton2 the "refined" aspect solution is interpolated between timestamps (typically 1 sec intervals) and applied to every photon. 
 
+The first aspect solution used by GALEX came from the on-board star tracker, a CCD used to track the telescope's motion through the sky by comparing observed stars to a catalog of known stars. With this first solution as input, the mission further refined the aspect using 1 second image frames preferentially from the NUV detector. Sources in these short images were then matched to the ACT reference catalog created by the USNO. The resulting refined aspect solution was used for all sky-projected images produced by the mission. 
 
 ## Our Efforts 
+Given the more than 20-year age of the ACT reference catalog used to generate the last refined aspect solution, there is clear potential for improvement through the adoption of a more recent reference catalog (e.g., Gaia or Tycho-2). A more accurate aspect solution helps reduce the PSFs of stars in eclipses where the dither pattern is not fully corrected. Furthermore, the "slew times" between the legs of an eclipse are characterized by poor aspect solutions due to the velocity of the telescope and are therefore traditionally disregarded. By improving the aspect solution during these slew periods, it becomes possible to recover a substantial quantity of otherwise unusable data. Seeking these improvements in both data volume and quality, we set about developing a method for reconstructing the mission’s aspect solution.
+
+Because the 1 second frames used to initially calculate the refined aspect solution were not saved, we had to remake them. This led to the current gPhoton2 infrastructure for extended photonlists and dose maps. A dose map shows the telescope FOV in detector space. By producing dose maps with very short time frames, we (mostly) removed the dither pattern from the image. We could produce a source catalog for each frame by running source finding on each with `photutils` `DAOStarFinder`. One second frames are very difficult to identifying sources in, especially in low source FOVs, so there were frequently artifacts or background being identified as stars. For the slew time periods we were trying to recover, one second wasn't usually enough to even identify a stars correctly as point sources. Instead, the stars appeared as small streaks and would be picked up by source finding as multiple sources. Shorter time frames worked slightly better if the stars were bright enough, but sub 1 second image frames are computationally expensive to produce for all slew periods across the mission. 
+
+We then selected a program to try and solve the aspect solution for each 1 second frame catalog: astrometry.net (https://astrometry.net/). You can use astrometry.net via their website or download the software, we used the software. It accepts an image as input and runs its own source finding routines, or you can feed a catalog as input. We found feeding our own catalogs to be faster than using their built-in source finding. Using the discovered sources, astrometry.net then matches their asterisms to catalogs ("index files") the user has chosen. We initially used the GALEX index files before moving on to the tycho-2 index files provided by astrometry.net. 
+
+The takeaway? For normal observation periods (not slew times), this method works. For slew frames, it's a little more hit or miss based on the field and velocity of the telescope. However, comparing the images of eclipses made with the new and old aspect solutions showed that image quality was mostly unchanged and sometimes worse. Additionally, generating a new aspect solution was very time intensive. For an eclipse that is 1500 seconds long: that's 1500 images, catalogs, and astrometry.net runs. 
+
+```{image} figures/aspectsoln.png
+:alt: psf aspect 
+:width: 600px
+:align: center
+```
+Above you can see close-ups of stars in images made with the old mission aspect solution and with the new method aspect solution. The PSFs of the stars look approximately the same, but the maximum value in the old aspect stars is higher than in the new stars. Therefore the old aspect produces higher quality de-dithered images for the eclipse shown. 
+
+In the end, we decided to keep the mission-produced refined aspect solution for gPhoton2. 
