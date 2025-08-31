@@ -15,6 +15,10 @@ project:
       children:
       - file: pages/galex_observation_modes.md
       - file: pages/galex_documentation.md
+      - file: pages/image_artifacts.md
+      - file: pages/detector_flat.md 
+      - file: pages/mission-related-papers.md 
+          hidden: true
     - title: gPhoton2
       children:
       - file: pages/gphoton_pipeline.md
@@ -40,6 +44,7 @@ project:
       children:
         - file: pages/glcat_introduction.md
     - title: Other GALEX Documentation
+        - file: pages/aspect_refinement.md
       children:
         - file: pages/galex_documentation.md
     - file: pages/acknowledgements.md
