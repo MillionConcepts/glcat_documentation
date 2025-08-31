@@ -18,7 +18,7 @@ project:
       - file: pages/image_artifacts.md
       - file: pages/detector_flat.md 
       - file: pages/mission-related-papers.md 
-          hidden: true
+        hidden: true
     - title: gPhoton2
       children:
       - file: pages/gphoton_pipeline.md
