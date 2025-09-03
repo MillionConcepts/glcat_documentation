@@ -23,6 +23,8 @@ project:
       children:
       - file: pages/gphoton_pipeline.md
       - file: pages/aspect_tables.md
+      - file: pages/photon_cuts.md
+      - file: pages/photonmasking.md
       - file: pages/sourcefinding.md
       - file: pages/filenaming_conventions.md
       - file: pages/image_file_formats.md
@@ -35,7 +37,6 @@ project:
       - file: pages/tables/image_metadata.md
         hidden: true
       - file: pages/alt_photom_cols.md
-      - file: pages/photonmasking.md
       - title: Methods and Cookbooks
         children:
         - file: pages/cookbook_basic_image_processing.ipynb

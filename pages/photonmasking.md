@@ -1,4 +1,4 @@
-# In-pipeline Photon Flagging: Flag Backplane 
+# Photon Flagging: Flag Backplane 
 
 ## Photon-level Flagging 
 Before the pipeline produces images, photons are flagged in-line and the flags are saved in the photonlist. These photon-level flags are then propagated into the flag backplane for both images and movies. 

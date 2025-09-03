@@ -41,6 +41,13 @@ Because hotspots are highly localized in detector space, we expect them to have 
 
 The dispersion image is not written as an output to gPhoton2. Instead, aperture photometry is run on the dispersion image. The results are normalized to the size of the aperture (`aperture sum / area of aperture`) and written to the column `stdcolrow_aperture_sum` in the photometry tables, or `BAND_SIGDISP_APER[ix]` in the band catalog files. Dispersion values range between eclipses based on the dither pattern, but as a rule very low values are likely hotspots or other detector-originating artifacts. Smaller aperture sizes are more useful for identifying hotspots and stars as there is less background contamination. 
 
+```{image} figures/dispersion_e23456.png
+:alt: dispersion
+:width: 750px
+:align: center
+```
+*Figure: Dispersion and count images for eclipse e23456. Note how most stars are bright spots on a dappled background.*
+
 ### Other Applications of Dispersion 
 
 Beyond the scope of the gPhoton2, count rate and dispersion can be useful for identifying all different parts of the backplanes. In the below example, dispersion and count are plotted against each other and matched to locations in a dose map. Note that dispersion values where two stars overlap are lower than those of stand-alone bright stars. The background has a wide range of dispersion values due to the low number of photons in each bin. 
@@ -51,6 +58,8 @@ Beyond the scope of the gPhoton2, count rate and dispersion can be useful for id
 :align: center
 ```
 *Figure: Probably going to make a better version of this figure....*
+
+---
 
 ## Pulse Height (Q) Photometry
 
@@ -77,6 +86,7 @@ While we don't measure the maximum pulse height values in gPhoton2, they do affe
 ```
 *Figure: Maximum pulse heights in a single NUV eclipse compared to the shape of a frame from the NUV walk correction file. Note the polygonal shapes visible in the left image.*
 
+---
 
 ## YA Photometry 
 

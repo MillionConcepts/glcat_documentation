@@ -3,6 +3,8 @@
 ## Past Methods: SExtractor
 Stars in GALEX images are treated as "point" sources in sky-projected space. Thorough identification of all point sources in a GALEX image is a critical step of catalog production. The methodology for point source identification has evolved from the `SExtractor` (Source-Extractor) program used by the mission's original pipeline to produce the MCAT. SExtractor was also used to identify "extended" sources (galaxies) and to run aperture photometry on output source catalogs. Separate tooling is now used in gPhoton2 for point source identification, extended source identification, and aperture photometry. 
 
+---
+
 ## Point Source Identification 
 A wide range of observation targets, exposure times, and two different bands makes a single solution with one set of detection thresholds an imperfect solution for GALEX. Historically, gPhoton used `photutils` implementation of the DAOFIND algorithm, `DAOStarFinder`, to identify point sources in count images. `DAOStarFinder` identifies sources with values over a user-set threshold and with a shape close to a 2D Gaussian Kernel set to be the approximate size of stars in the image. This works pretty well, but has issues with over or under source identification in sparse images, as well as images with variable background. 
 
@@ -65,6 +67,8 @@ The minimum is applied first, followed by the multiplier.
     bkg_rms[bkg_rms < minimum] = minimum
     threshold = np.multiply(multiplier, bkg_rms)
 
+---
+
 ## Extended Source Identification 
 
 Extended source identification has a wider range of targets it looks to identify than point source. Extended sources generally consist of 1) multiple point sources and 2) are not point-source shaped (~small circle) but the scale can differ significantly from most of the FOV (1.2 degrees) to tens of pixels (1.5 arcsec/pixel). The new method employed by gPhoton2 for extended source identification takes the theory of an “extended source is a collection of point sources” to the extreme by identifying bright areas (not necessarily stars) with loose DaoStarFinder settings and clustering them with DBSCAN. `Photutils` `DaoStarFinder` uses the DAOFIND algorithm (Stetson 1987) to identify point sources by finding local maximums and attempting to fit a gaussian to them. 
@@ -122,6 +126,8 @@ Two metrics are then added to the extended source catalog: the star count (`sour
 ### Artifacts as Extended Sources 
 
 Some artifacts, like edge reflections, look a lot like extended sources. It is important to double check in the image that your extended source is not an artifact. Proximity to the edge of the image is also a good proxy for viewing the image, although it will not cover all artifact types. In the figure above you can see one edge reflection in the NUV is identified as an extended source. 
+
+---
 
 ## Aperture Photometry 
 
