@@ -2,8 +2,6 @@
 
 ## MCP Detector Structure 
 
-Talk more about this? Or just point to the multitude of papers on the subject? 
-
 ```{image} figures/detector.png
 :alt: mcp
 :width: 400px
