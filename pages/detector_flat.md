@@ -12,7 +12,7 @@ Talk more about this? Or just point to the multitude of papers on the subject?
 
 ## Mission Flats
 
-The last set of GALEX mission flats are also used by gPhoton2. In both flats you can see recurent hot and cold spots, as well as low and high sensitivity portions of the detectors. Many of the patterns reflected in the flats are a direct result of the NUV and FUV detectors. In general, they are not visible at the eclipse level. 
+The last set of GALEX mission flats are also used by gPhoton2. In both flats you can see recurrent hot and cold spots, as well as low and high sensitivity portions of the detectors. Many of the patterns reflected in the flats are a direct result of the NUV and FUV detectors. In general, they are not visible at the eclipse level. 
 
 ```{image} figures/flats.png
 :alt: flat

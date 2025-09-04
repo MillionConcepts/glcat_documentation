@@ -30,9 +30,9 @@ We flag photons based on their proximity to the detector edge. 'Detrad' is calcu
 
 ### Post-CSP "Ghost" Flags
 
-Data quality significantly degraded late in the mission after a Coarse Sun Point (CSP) event in May 2010 (eclipse 37423) which caused pervasive streakiness in the images in the Y direction. The mission attributed the image quality degradation to the pho"partial failure of a capacitor associated with an A/D converter." By adjusting the time-to-amplitude-converter (TAC) a month later (eclipse 38149), the image quality improved. 
+Data quality significantly degraded late in the mission after a Coarse Sun Point (CSP) event in May 2010 (eclipse 37423) which caused pervasive streakiness in the images in the Y direction. The mission attributed the image quality degradation to the "partial failure of a capacitor associated with an A/D converter". By adjusting the time-to-amplitude-converter (TAC) a month later (eclipse 38149), the image quality improved. 
 
-Some remaining streakiness was improved by applying a correction with photon YA values. Different walk and wiggle calibration files, as well as stim positions are also used for processing post-CSP eclipses. However, despite these improvements to the pipeline for post-CSP eclipses, some remaining photons are not position-corrected and appear as "ghosts" to the actual stars. These ghosts have a consistent offset accross the detector from their originating star along the detector Y axis. 
+Some remaining streakiness was improved by applying a correction with photon YA values. Different walk and wiggle calibration files, as well as stim positions are also used for processing post-CSP eclipses. However, despite these improvements to the pipeline for post-CSP eclipses, some remaining photons are not position-corrected and appear as "ghosts" to the actual stars. These ghosts have a consistent offset across the detector from their originating star along the detector Y axis. 
 
 ```{image} figures/cnt_e44405.png
 :alt: e44405count
