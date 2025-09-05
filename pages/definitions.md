@@ -12,8 +12,10 @@ eclipse
 
 leg
 : A subdivision of an {term}`eclipse`, during which the telescope was
-  observing a specific area of the sky.  There are typically 1 to 12
-  legs per eclipse.
+  observing a specific area of the sky.  There is always at least one
+  leg for each eclipse; no more than 12 legs were ever _planned_, but
+  due to unintentional deviations from the plan, some eclipses have as
+  many as 18 _observed_ legs.
 
 observation mode
 : The general type of observation carried out during an
@@ -40,5 +42,13 @@ full-depth
 movie
 : A time series of images produced by dividing an observation into
   contiguous periods of a specified {term}`depth`.
+
+GPS epoch
+: <time datetime="1980-01-06T00:00:00Z">January 6, 1980, at 00:00:00 UTC</time>:
+  the zero time point for the [Global Positioning
+  System](https://www.gps.gov/systems/gps/).
+  Refer to
+  [IS-GPS-200](https://www.gps.gov/technical/icwg/IS-GPS-200N.pdf)
+  section 3.3.4 for further specifics.
 
 :::

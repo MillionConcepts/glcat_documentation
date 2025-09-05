@@ -93,13 +93,14 @@ that was performed for GLCAT.
 * - `planned_legs`
   - integer
   - scst file header, `MPSNPOS`
-  - Number of _planned_ observation targets for this eclipse.
-    Always at least 1; in practice, never higher than 12.
+  - Number of _planned_ observation targets ({term}`leg`s) for this eclipse.
+    Always at least 1; never higher than 12.
 * - `observed_legs`
   - integer[^null-unsupport]
   - Leg recalculation
   - Number of distinct targets actually observed.
     This is _usually_ equal to `planned_legs` but can be smaller or bigger.
+    When not null, always at least 1 and never higher than 18.
 * - `has_aspect`
   - boolean
   - `aspect.parquet`
@@ -107,8 +108,7 @@ that was performed for GLCAT.
 * - `eclipse_start`
   - float
   - scst file header, `TRANGE0`
-  - Start time for this eclipse, as seconds since the
-    {abbr}`GPS (Global Positioning System)` epoch[^gps-epoch];
+  - Start time for this eclipse, as seconds since the {term}`GPS epoch`;
     always strictly less than the time of the first
     [aspect fix](#aspect) for the eclipse.
 * - `eclipse_duration`
@@ -143,10 +143,10 @@ that was performed for GLCAT.
 * - `ra0`
   - float[^null-unsupport]
   - Leg recalculation
-  - RA of the centroid of the telescope’s aggregate field of view.
-    Always greater than `ra_min` and less than `ra_max`.  In rare
-    cases (when the field of view crossed the ±180° meridian), `ra0`
-    can be greater than 180.
+  - RA of the centroid of the telescope’s aggregate field of view
+    during this eclipse.  Always greater than `ra_min` and less than
+    `ra_max`.  In rare cases (when the field of view crossed the ±180°
+    meridian), `ra0` can be greater than 180.
 * - `dec_min`
   - float[^null-unsupport]
   - Leg recalculation
@@ -161,8 +161,9 @@ that was performed for GLCAT.
 * - `dec0`
   - float[^null-unsupport]
   - Leg recalculation
-  - Declination of the centroid of the telescope’s aggregate field of view.
-    Always greater than `dec_min` and less than `dec_max`.
+  - Declination of the centroid of the telescope’s aggregate field of
+    view during this eclipse.  Always greater than `dec_min` and less
+    than `dec_max`.
 * - `nuv_det_on_time`
   - float
   - scst file header, `NHVNOMN`
@@ -202,8 +203,6 @@ that was performed for GLCAT.
 
 :::
 
-[^gps-epoch]: January 6, 1980, at 00:00:00 UTC.
-
 [^null-unsupport]: These columns will all be null when (and only when)
     the `has_aspect` column is false, indicating that gPhoton 2
     currently doesn’t support the observation mode of this eclipse.
@@ -225,8 +224,170 @@ that was performed for GLCAT.
 (boresight)=
 ### `boresight.parquet`
 
+This table contains one row for each _observed_ {term}`leg` of each
+eclipse that gPhoton 2 can process.  Eclipses for which `has_aspect`
+is false in [](#metadata) do not appear in this table.  It provides
+reference values needed to process the [aspect fixes](#aspect) for
+each leg.
+
+The data in this table was entirely produced by the [heuristic leg
+recalculation](/glcat-leg-recalc) process.
+
+:::{list-table} Columns of `boresight.parquet`
+:label: boresight-schema
+:align: center
+:header-rows: 1
+
+* - Column
+  - Type
+  - Contents
+* - `eclipse`
+  - integer
+  - Serial number of the eclipse.
+* - `leg`
+  - integer
+  - 1-based index of the leg within the eclipse.
+* - `time`
+  - float
+  - Starting time of the leg, as seconds since the {term}`GPS epoch`;
+    always strictly less than the time of the first _usable_
+    [aspect fix](#aspect) for the leg.
+* - `duration`
+  - float
+  - Duration of the leg, in seconds.  `time + duration` is always
+    strictly greater than the time of the last _usable_ [aspect fix](#aspect)
+    for the leg.
+* - `ra_min`
+  - float
+  - {abbr}`RA (equatorial right ascension)` of the western edge of a
+    box enclosing the telescope’s aggregate field of view during this
+    leg.
+* - `ra0`
+  - float
+  - RA of the centroid of the telescope’s aggregate field of view
+    during this leg.  Always greater than `ra_min` and less than
+    `ra_max`.  In rare cases (when the field of view crossed the ±180°
+    meridian), `ra0` can be greater than 180.
+* - `ra_max`
+  - float
+  - RA of the eastern edge of a box enclosing the telescope’s
+    aggregate field of view during this leg.  Always greater than
+    `ra_min`.  In rare cases (when the field of view crossed the ±180°
+    meridian), `ra_max` can be greater than 180.
+* - `dec_min`
+  - float
+  - Declination of the southern edge of a box enclosing the
+    telescope’s aggregate field of view during this leg.
+* - `dec0`
+  - float
+  - Declination of the centroid of the telescope’s aggregate field of
+    view during this leg.  Always greater than `dec_min` and less
+    than `dec_max`.
+* - `dec_max`
+  - float
+  - Declination of the northern edge of a box enclosing the
+    telescope’s aggregate field of view during this leg.
+    Always greater than `dec_min`.
+* - `planned_ra`
+  - float
+  - RA of the _planned_ target of observation for this leg.
+    Normally close to `ra0`, but can be substantially different
+    (whenever the telescope did not carry out the plan as intended).
+* - `planned_dec`
+  - float
+  - Declination of the _planned_ target of observation for this leg.
+    Normally close to `dec0`, but can be substantially different.
+* - `full_exposure_area`
+  - float
+  - Solid angle, in square degrees, covered by the region of the sky
+    that the telescope observed for the entire usable duration of the
+    leg (the “full exposure region”).  For legs where the telescope
+    was programmed nominally and carried out its program successfully,
+    this will be slightly smaller than 1.25 square degrees.  It cannot
+    be greater than 1.25.
+* - `full_exposure_uncircularity`
+  - float
+  - A measure of how much the full exposure region deviates from a
+    perfect circle.  Specifically, this is the reciprocal of the
+    [isoperimetric quotient][isop] of the full exposure region,
+    minus 1.  Zero would indicate the full exposure region _is_ a
+    perfect circle (this never happened), and larger values mean the
+    telescope’s pointing had more and more of a _directional_ wander
+    to it.
+* - `partial_exposure_area_ratio`
+  - float
+  - A measure of how much smaller the full exposure region is than the
+    ideal.  Specifically, this is the solid angle covered by the
+    region of the sky that was observed for only _part_ of the usable
+    duration of the leg, divided by the `full_exposure_area`.  Zero
+    would indicate that the telescope’s pointing did not wander at all
+    (this never happened), larger values mean more wander of some kind.
+
+:::
+
+[isop]: https://mathworld.wolfram.com/IsoperimetricQuotient.html
+
 (leg-aperture)=
 ### `leg-aperture.parquet`
+
+This table contains one row for each _observed_ {term}`leg` of each
+eclipse that gPhoton 2 can process.  Eclipses for which `has_aspect`
+is false in [](#metadata) do not appear in this table.  It provides
+information about GALEX’s overall field of view for each leg.  It’s
+separate from [](#boresight) because the field of view information is
+bulky and not always required.
+
+The “geometry” columns of this table each store
+a vector representation of a region of the sky,
+in [WKB format](https://libgeos.org/specifications/wkb/).
+The geometry type is always either `Polygon` or `MultiPolygon`.
+
+:::{note}
+RA coordinates of regions in this table never exceed +180°; when the
+field of view crosses the ±180° meridian of right ascension, the
+region is split at that meridian, with some of the subpolygons having
+RA coordinates close to +180° and others close to −180°. This is
+different from the handling of RA values in [](#metadata) and
+[](#boresight).
+:::
+
+The data in this table was entirely produced by the [heuristic leg
+recalculation](/glcat-leg-recalc) process.
+
+:::{list-table} Columns of `leg-aperture.parquet`
+:label: leg-aperture-schema
+:align: center
+:header-rows: 1
+
+* - Column
+  - Type
+  - Contents
+* - `eclipse`
+  - integer
+  - Serial number of the eclipse.
+* - `leg`
+  - integer
+  - 1-based index of the leg within the eclipse.
+* - `partial`
+  - geometry
+  - The region of the sky that was observed for _at least_ part of the leg.
+* - `full_400`
+  - geometry
+  - The region of the sky that was observed for all of the leg.
+* - `full_370`
+  - geometry
+  - The region of the sky that was observed _by the central part of
+    the detector plate_ for all of the leg.  Data from the edges of
+    the detector plate is often contaminated by
+    [artifacts](/image-artifacts); this region is somewhat less
+    likely to be contaminated.
+* - `full_350`
+  - geometry
+  - Similar to `full_370` but using an even more restrictive
+    definition of “the central part of the detector.”  [TODO:
+    Document what 400, 370, and 350 actually mean. -zw]
+
+:::
 
 (aspect)=
 ### `aspect.parquet`
