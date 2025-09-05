@@ -90,7 +90,7 @@ While we don't measure the maximum pulse height values in gPhoton2, they do affe
 
 ## YA Photometry 
 
-YA Photometry is most useful for post-CSP eclipses which have "ghosts" with low YA values. While we only run ghost-flagging for post-CSP eclipses, we do photometry on mean YA images for all eclipses. As you can see below, in normal eclipses the mean YA value is relatively unremarkable other than a faint striped pattern. Stars are virtually indistinguishable from the background. See {doc}`the page on photon masking <pages/photonmasking>` for more discussion of ghosts. 
+YA Photometry is most useful for post-CSP eclipses which have "ghosts" with low YA values. While we only run ghost-flagging for post-CSP eclipses, we do photometry on mean YA images for all eclipses. As you can see below, in normal eclipses the mean YA value is relatively unremarkable other than a faint striped pattern. Stars are virtually indistinguishable from the background. See [the page on photon masking](photonmasking) for more discussion of ghosts. 
 
 ```{image} figures/ya_mean_example.png
 :alt: yamean

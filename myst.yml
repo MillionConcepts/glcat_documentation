@@ -5,7 +5,7 @@ project:
   title: GALEX Documentation
   description: Documentation for the GALEX Legacy Catalog (GLCat)
   # keywords: [GALEX, GLCat, gPhoton]
-  # authors: 
+  # authors:
   github: https://github.com/MillionConcepts/glcat_documentation
   # To autogenerate a Table of Contents, run "myst init --write-toc"
   toc:
@@ -16,8 +16,8 @@ project:
       - file: pages/galex_observation_modes.md
       - file: pages/galex_documentation.md
       - file: pages/image_artifacts.md
-      - file: pages/detector_flat.md 
-      - file: pages/mission-related-papers.md 
+      - file: pages/detector_flat.md
+      - file: pages/mission-related-papers.md
         hidden: true
     - title: gPhoton2
       children:
@@ -29,8 +29,6 @@ project:
       - file: pages/filenaming_conventions.md
       - file: pages/image_file_formats.md
       - file: pages/image_file_formats.ipynb
-        hidden: true
-      - file: pages/definitions.md
         hidden: true
       - file: pages/tables/photonlist_tbl_def.md
         hidden: true
@@ -49,7 +47,7 @@ project:
         - file: pages/galex_documentation.md
         - file: pages/aspect_refinement.md
     - file: pages/acknowledgements.md
-    - file: pages/definitions.md 
+    - file: pages/definitions.md
       hidden: true
 
   exclude:
