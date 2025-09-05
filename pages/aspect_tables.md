@@ -7,8 +7,7 @@ site:
 # The Aggregated Aspect and Metadata Tables
 
 gPhoton 2 relies on four large tables of precalculated data.
-These contain information about each
-[{abbr}`GALEX (Galexy Evolution Explorer)`][GALEX] eclipse[^eclipse]
+These contain information about each GALEX {term}`eclipse`
 which depends only on how the GALEX satellite was programmed for that
 eclipse (this is the “metadata”) and what part of the sky it was
 actually pointed at during each part of the eclipse (the “aspect
@@ -23,14 +22,6 @@ gPhoton source code. [They are currently downloadable from Google
 Drive][gdrive-aspect], but may be moved to MAST, or another more
 convenient location, in the future.
 
-[^eclipse]: The GALEX satellite was in a medium-altitude orbit of
-    Earth.  Because it was designed to observe very faint stars and
-    galaxies, it could only collect data during the part of each orbit
-    that passed within Earth’s shadow.  Each such period of active
-    observation is referred to as an eclipse.
-
-
-[GALEX]: http://www.galex.caltech.edu/
 [GALEX archive]: https://archive.stsci.edu/missions-and-data/galex
 [MAST]: https://archive.stsci.edu/
 [gdrive-aspect]: https://drive.google.com/drive/u/1/folders/1aPfLKsZM8x5Pxji0Lh3dUblpo9dyt1IW
@@ -42,9 +33,9 @@ table in [Apache Parquet][] format.
 
 All four tables contain celestial coordinates; these are uniformly
 equatorial (J2000), with values in decimal degrees.  Declination
-ranges from −90° to 90°.  Right ascension _normally_ ranges from
-−180° to 180°, but values greater than 180° can appear in a few
-places, such as the `ra_max` column of `metadata.parquet` and
+ranges from −90° to 90°.  Right ascension _normally_ ranges from −180°
+to 180°, but values greater than 180° can appear in a few places, such
+as the `ra0` and `ra_max` columns of `metadata.parquet` and
 `boresight.parquet`.
 
 [Apache Parquet]: https://parquet.apache.org/
@@ -119,19 +110,23 @@ that was performed for GLCAT.
   - Start time for this eclipse, as seconds since the
     {abbr}`GPS (Global Positioning System)` epoch[^gps-epoch];
     always strictly less than the time of the first
-    [aspect fix](#aspect-schema) for the eclipse.
+    [aspect fix](#aspect) for the eclipse.
 * - `eclipse_duration`
   - float
   - scst file header, `TRANGE1`
   - Duration of this eclipse, in seconds;
     `eclipse_start + eclipse_duration` is always strictly greater than
-    the time of the last [aspect fix](#aspect-schema) for the eclipse.
+    the time of the last [aspect fix](#aspect) for the eclipse.<br>
+    Caution: for the majority of eclipses this number is nonsense
+    (substantially larger than the maximum physically plausible
+    duration of an eclipse).
 * - `ok_exposure_time`
   - float[^null-unsupport]
   - Leg recalculation
   - Total time during which usable data was being collected;
     always less than `eclipse_duration`;
     always a whole number of seconds.
+    Unlike `eclipse_duration` this number is always in a sensible range.
 * - `ra_min`
   - float[^null-unsupport]
   - Leg recalculation
@@ -229,8 +224,6 @@ that was performed for GLCAT.
 
 (boresight)=
 ### `boresight.parquet`
-
-Thist
 
 (leg-aperture)=
 ### `leg-aperture.parquet`

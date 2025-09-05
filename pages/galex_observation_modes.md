@@ -7,7 +7,7 @@ site:
 
 # Observation Modes
 
-The “observation mode” or “plan type” for each eclipse identifies the
+The “observation mode” or “plan type” for each {term}`eclipse` identifies the
 general type of observation that was carried out for that eclipse.
 These roughly correspond to the different classes of “science survey”
 described in [chapter 2 of the official GALEX technical documentation][galex-tech-ch2].
@@ -22,8 +22,8 @@ the data collected in spectroscopic modes.
 
 | Mode | Description | Typical Exposure Time | Typical Depth (AB mag) | Notes |
 |------|-------------|-----------------------|------------------------|-------|
-| AIS  | All-Sky Imaging Survey     | ~140 sec   | ~20.5  | Typically 12 legs per eclipse. |
-| MIS  | Medium Imaging Survey      | ~1500 sec  | ~23    | Typically one leg per eclipse. |
+| AIS  | All-Sky Imaging Survey     | ~140 sec   | ~20.5  | Typically 12 {term}`leg`s per eclipse. |
+| MIS  | Medium Imaging Survey      | ~1500 sec  | ~23    | Typically one {term}`leg` per eclipse. |
 | DIS  | Deep Imaging Survey        | ~30000 sec | ~25    | Repeated MIS-like or AIS-like visits to the same field |
 | NGS  | Nearby Galaxy Survey       | 1000–1500 sec | Varies | Targeted observations of nearby galaxies |
 | CAI  | Calibration Imaging        | ~140 sec   | ?      | Images of stars with known ultraviolet brightness |
