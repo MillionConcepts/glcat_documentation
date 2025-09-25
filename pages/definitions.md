@@ -1,14 +1,14 @@
 :::{glossary}
 
 eclipse
-: One period of active observation for GALEX.  Because GALEX was
-  designed to observe very faint stars and galaxies, it could only
-  collect data while it was within Earth’s shadow, shielded from the
-  Sun’s glare.  This occurred once per orbit, for about 30 minutes;
-  therefore, the maximum duration of a single observation is about 30
-  minutes.  Eclipses are numbered; eclipse 580, for example, refers to
-  the period of eclipse during the satellite’s 580th orbit, or to the
-  data collected during that eclipse.
+: The period of time during which GALEX was in Earth's shadow, which
+  occurred once per orbit. Because GALEX observed in the UV with very
+  sensitive detectors, it could only observe while in shadow. Each 
+  eclipse is about 30 minutes long; therefore, the maximum duration of 
+  a single observation is about 30
+  minutes. Eclipses are numbered; for example, eclipse \#580 (which might be
+  written e580 or e00580) refers to
+  the observation(s) in the satellite’s 580th orbit.
 
 leg
 : A subdivision of an {term}`eclipse`, during which the telescope was

@@ -4,7 +4,7 @@ project:
   id: 899b5b31-4895-46ff-ab87-48d78140335d
   title: GALEX Documentation
   description: Documentation for the GALEX Legacy Catalog (GLCat)
-  # keywords: [GALEX, GLCat, gPhoton]
+  # keywords: [GALEX, GLCat, gPhoton, gPhoton2, UV, astronomy, astrophysics, photometry]
   # authors:
   github: https://github.com/MillionConcepts/glcat_documentation
   # To autogenerate a Table of Contents, run "myst init --write-toc"
@@ -13,35 +13,35 @@ project:
     - file: pages/getting_started.md
     - title: GALEX
       children:
-      - file: pages/galex_observation_modes.md
-      - file: pages/galex_documentation.md
-      - file: pages/image_artifacts.md
-      - file: pages/detector_flat.md
-      - file: pages/mission-related-papers.md
+      - file: pages/galex/galex_observation_modes.md
+      - file: pages/galex/galex_documentation.md
+      - file: pages/galex/image_artifacts.md
+      - file: pages/galex/detector_flat.md
+      - file: pages/galex/mission_related_papers.md
         hidden: true
-    - title: gPhoton2
+    - title: gPhoton(1&2)
       children:
-      - file: pages/gphoton_pipeline.md
-      - file: pages/aspect_tables.md
-      - file: pages/photon_cuts.md
-      - file: pages/photonmasking.md
-      - file: pages/sourcefinding.md
-      - file: pages/filenaming_conventions.md
-      - file: pages/image_file_formats.md
-      - file: pages/image_file_formats.ipynb
+      - file: pages/gphoton/gphoton_pipeline.md
+      - file: pages/gphoton/aspect_tables.md
+      - file: pages/gphoton/photon_cuts.md
+      - file: pages/gphoton/photonmasking.md
+      - file: pages/gphoton/sourcefinding.md
+      - file: pages/gphoton/filenaming_conventions.md
+      - file: pages/gphoton/image_file_formats.md
+      - file: pages/gphoton/image_file_formats.ipynb
         hidden: true
       - file: pages/tables/photonlist_tbl_def.md
         hidden: true
       - file: pages/tables/image_metadata.md
         hidden: true
-      - file: pages/alt_photom_cols.md
+      - file: pages/gphoton/alt_photom_cols.md
       - title: Methods and Cookbooks
         children:
-        - file: pages/cookbook_basic_image_processing.ipynb
-        - file: pages/cookbook_basic_photometry.ipynb
+        - file: pages/gphoton/cookbook_basic_image_processing.ipynb
+        - file: pages/gphoton/cookbook_basic_photometry.ipynb
     - title: GLCAT Overview
       children:
-        - file: pages/glcat_introduction.md
+        - file: pages/glcat/glcat_introduction.md
     - title: Other GALEX Documentation
       children:
         - file: pages/galex_documentation.md

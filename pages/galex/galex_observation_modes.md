@@ -7,8 +7,7 @@ site:
 
 # Observation Modes
 
-The “observation mode” or “plan type” for each {term}`eclipse` identifies the
-general type of observation that was carried out for that eclipse.
+The “observation mode” or “plan type” for each {term}`eclipse` identifies observation strategy employed for that eclipse.
 These roughly correspond to the different classes of “science survey”
 described in [chapter 2 of the official GALEX technical documentation][galex-tech-ch2].
 
